@@ -68,8 +68,12 @@ const testCases = [
         "Promise that could resolve or not, resolve if m == 1 else reject, will try three times -- NOT DETERMINISTIC, Result May Vary"
     ],
     [
-        async () => (Promise.resolve(true)),
-        (atmp, ms) => (0)
+        async () => (Promise.all[
+            Promise.resolve(true),
+            Promise.reject(false)
+        ]),
+        (atmp, ms) => (3 - atmp),
+        "Using a promise All"
     ],
     [
         async () => (undefined),
