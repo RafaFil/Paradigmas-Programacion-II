@@ -68,32 +68,43 @@ const testCases = [
         "Promise that could resolve or not, resolve if m == 1 else reject, will try three times -- NOT DETERMINISTIC, Result May Vary"
     ],
     [
-        async () => (Promise.all[
+        async () => (Promise.all([
             Promise.resolve(true),
             Promise.reject(false)
-        ]),
+        ])),
         (atmp, ms) => (3 - atmp),
         "Using a promise All"
     ],
     [
         async () => (undefined),
-        (atmp, ms) => (1)
+        (atmp, ms) => (1),
+        "Using undefined"
     ],
     [
-        async () => (Promise.resolve(true)),
-        (atmp, ms) => (0)
+        async () => (null),
+        (atmp, ms) => (null),
+        "Using null"
     ],
     [
-        async () => (Promise.resolve(true)),
-        (atmp, ms) => (0)
+        async () => (null),
+        (atmp, ms) => (null),
+        "Using null"
     ],
     [
-        async () => (Promise.resolve(true)),
-        (atmp, ms) => (0)
+        async () => (Promise.any([
+            Promise.resolve(true),
+            Promise.reject(false)
+        ])),
+        (atmp, ms) => (3 - atmp),
+        "Using a promise Any"
     ],
     [
-        async () => (Promise.resolve(true)),
-        (atmp, ms) => (0)
+        async () => (Promise.any([
+            Promise.resolve(false),
+            Promise.reject(true)
+        ])),
+        (atmp, ms) => (3 - atmp),
+        "Using a promise Any"
     ]
 ]
 
