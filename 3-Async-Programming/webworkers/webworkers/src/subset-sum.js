@@ -58,10 +58,10 @@ export function testSubsetSum() {
   return { ns, target, firstSolution, time };
 } // function testSubsetSum
 
-export function testSubsetSumParallel() {
+export async function testSubsetSumParallel() {
   const [ns, target] = randomSubsetSumProblem();
   const startTime = Date.now();
-  const firstSolution = naiveSubsetSumParallel(ns, target) ?? null;
+  const firstSolution = await naiveSubsetSumParallel(ns, target) ?? null;
   const time = (Date.now() - startTime) / 1e3;
   return { ns, target, firstSolution, time };
 }
