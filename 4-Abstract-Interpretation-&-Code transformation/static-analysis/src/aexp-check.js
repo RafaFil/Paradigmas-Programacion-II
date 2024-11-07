@@ -3,7 +3,7 @@ const alwaysEvalNumber = ['-','*','/','%']
 
 export function aExpCheck(leftType, rightType, operand) {
     if(!validOperands.includes(operand)) {
-        throw new SyntaxError(`Nodes ${exp.type} not supported yet!`);
+        throw new SyntaxError(`Nodes ${operand} not supported yet!`);
     }
     else {
         if((leftType === rightType) || alwaysEvalNumber.includes(operand)) {

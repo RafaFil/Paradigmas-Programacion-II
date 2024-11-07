@@ -54,11 +54,19 @@ const testCases = [
     },
     {
         expression: logicalExpression(
-            "&&",
+            "||",
             numericLiteral(10), 
             numericLiteral(20)
         ),  
         expectedResult: 'number'
+    },
+    {
+        expression: logicalExpression(
+            "&&",
+            booleanLiteral(true),
+            booleanLiteral(false)
+        ),  
+        expectedResult: 'boolean'
     },
     {
         expression: unaryExpression(

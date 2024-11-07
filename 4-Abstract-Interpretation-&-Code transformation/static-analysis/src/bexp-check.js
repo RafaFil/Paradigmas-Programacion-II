@@ -3,7 +3,7 @@ const validOperands = ['==','!=', '<','>','<=','>=','!','&&','||']
 export function bExpCheck(leftType, rightType, operand) {
     console.log(leftType, rightType, operand)
     if (!validOperands.includes(operand)) {
-        throw new SyntaxError(`Nodes ${exp.type} not supported yet!`);
+        throw new SyntaxError(`Nodes ${operand} not supported yet!`);
     }
 
     if(['==','!=', '<','>','<=','>=','!'].includes(operand)) {
