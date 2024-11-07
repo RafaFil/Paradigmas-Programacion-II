@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@babel/core": "^7.22.10"
+  },
+ "scripts": {
+    "start": "node src/type-check.js",
+    "test": "node src/test.js"
+  },
+  "type": "module"
+}
