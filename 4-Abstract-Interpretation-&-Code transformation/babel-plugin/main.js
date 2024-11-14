@@ -27,14 +27,39 @@ const test3 = `
   const d = 67 + 0;
   const e = 43 - 0;
   const f = 20 / 1;
-
+  const g = 1 > 10;
 
   }
 
 `
 
+const test4 = `
+
+  function f(x) {
+  
+    const y = x * 0;
+
+  }
+
+`
+
+const test5 = `
+
+  function f(x) {
+    const a = 1 + 2;
+    const b = 1 * 3;
+    const c = 0 * 5;
+    const d = 67 + 0;
+    const e = 43 - 0;
+    const f = 20 / 1;
+
+    const asd = 10 > 20;
+  }
+
+`
+
 function main() {
-    const codeIn = test3;
+    const codeIn = test5;
     const {
       ast, code: codeOut,
     } = transformSync(codeIn, {

@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@babel/core": "^7.22.10"
+    "@babel/core": "^7.22.10",
+    "@babel/generator": "^7.26.2"
   },
   "scripts": {
     "start": "node main.js"

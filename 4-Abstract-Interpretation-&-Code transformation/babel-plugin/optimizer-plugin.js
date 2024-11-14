@@ -1,6 +1,10 @@
 // Pliegue de constantes
 // 4 o mas simplificaciones algebraicas
 
+import generator from "@babel/generator";
+
+const generate = generator.default;
+
 export function optimizerPlugin({ types: t }) {
     return {
         visitor: {
@@ -8,39 +12,63 @@ export function optimizerPlugin({ types: t }) {
                 exit(path) {
                     const { node } = path;
                     const {left,right} = node
-                        if (t.isNumericLiteral(left) && t.isNumericLiteral(right)) { // Pliegue de constantes
-
-                            const res = eval(`${left.value}${node.operator}${right.value}`)
-                            path.replaceWith(t.numericLiteral(res))
+                    if (left.type.includes('Literal') && right.type.includes('Literal')) { //Pliegue constantes
+                        const output = generate(node).code
+                        const res = eval(output)
+                        path.replaceWith(t.valueToNode(res))
+                    }
+                    else if(node.operator === '*') { // algebraicas
+                        if(t.isNumericLiteral(left) && left.value === 1){
+                            path.replaceWith(t.numericLiteral(right.value))
+                        }else if (t.isNumericLiteral(right) && right.value === 1){
+                            path.replaceWith(t.numericLiteral(left.value))
                         }
-                        else if(node.operator === '*') { // algebraicas
-                            if(t.isNumericLiteral(left) && left.value === 1){
-                                path.replaceWith(t.numericLiteral(right.value))
-                            }else if (t.isNumericLiteral(right) && right.value === 1){
-                                path.replaceWith(t.numericLiteral(left.value))
-                            }
-                            if(t.isNumericLiteral(left) && left.value === 0){
-                                path.replaceWith(t.numericLiteral(0))
-                            }else if (t.isNumericLiteral(right) && right.value === 0){
-                                path.replaceWith(t.numericLiteral(0))
-                            }
+                        if(t.isNumericLiteral(left) && left.value === 0){
+                            path.replaceWith(t.numericLiteral(0))
+                        }else if (t.isNumericLiteral(right) && right.value === 0){
+                            path.replaceWith(t.numericLiteral(0))
                         }
-                        else if (node.operator === '+') {
-                            if (t.isNumericLiteral(left) && left.value === 0) {
-                                path.replaceWith(right);
-                            } else if (t.isNumericLiteral(right) && right.value === 0) {
-                                path.replaceWith(left);
-                            }
-                        } else if (node.operator === '-') {
-                            if (t.isNumericLiteral(right) && right.value === 0) {
-                                path.replaceWith(left);
-                            }
+                    }
+                    // else if (node.operator === '+') {
+                    //     if (t.isNumericLiteral(left) && left.value === 0) {
+                    //         path.replaceWith(right);
+                    //     } else if (t.isNumericLiteral(right) && right.value === 0) {
+                    //         path.replaceWith(left);
+                    //     }
+                    // } 
+                    else if (node.operator === '-') {
+                        if (t.isNumericLiteral(right) && right.value === 0) {
+                            path.replaceWith(left);
                         }
-                        else if (node.operator === '/') {
-                            if (t.isNumericLiteral(right) && right.value === 1) {
-                                path.replaceWith(left);
-                            }
+                    }
+                    else if (node.operator === '/') {
+                        if (t.isNumericLiteral(right) && right.value === 1) {
+                            path.replaceWith(left);
                         }
+                    }
+                    else if((t.isNumericLiteral(left) && isNaN(left.value)) || (t.isNumericLiteral(right) && isNaN(right.value))) {
+                        path.replaceWith(t.numericLiteral(NaN));
+                    }
+                }
+            },
+            LogicalExpression: {
+                exit(path) {
+                    const { node } = path;
+                    const {left,right} = node;
+                    if (left.type.includes('Literal') && right.type.includes('Literal')) { //Pliegue constantes
+                        const output = generate(node).code
+                        const res = eval(output)
+                        path.replaceWith(t.booleanLiteral(res))
+                    }
+                }
+            },
+            UnaryExpression: {
+                exit(path) {
+                    const { node } = path;
+                    const { argument, operator } = node;
+                    if (operator === "!") {
+                        path.replaceWith(t.booleanLiteral(!argument.value));
+                    }
                 }
             }
         }
