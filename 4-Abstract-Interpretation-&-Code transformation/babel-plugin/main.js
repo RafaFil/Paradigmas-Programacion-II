@@ -49,11 +49,29 @@ const test5 = `
     const a = 1 + 2;
     const b = 1 * 3;
     const c = 0 * 5;
-    const d = 67 + 0;
     const e = 43 - 0;
     const f = 20 / 1;
 
     const asd = 10 > 20;
+
+    const logical = true && false;
+
+    const y = 150
+    const multZero = y * 0;
+
+    const unary = !false
+
+    if (true) {
+      const a = 5;
+    }
+    else {
+      const a = 7;
+    }
+
+    while(10 < 0) {
+      const p = 15;
+    }
+
   }
 
 `
@@ -81,7 +99,7 @@ function f(x) {
 
 
 function main() {
-    const codeIn = test6;
+    const codeIn = test5;
     const {
       ast, code: codeOut,
     } = transformSync(codeIn, {
