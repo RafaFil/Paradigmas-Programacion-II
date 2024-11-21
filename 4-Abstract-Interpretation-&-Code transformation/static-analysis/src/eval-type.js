@@ -34,6 +34,17 @@ export function evalType(exp, symbols) {
         const { operator } = exp
         return bExpCheck(argumentType, '', operator)
       }
+      case 'ConditionalExpression': {
+        const consequentType = exp.consequent.type;
+        const alternateType = exp.alternate.type;
+
+        if (consequentType === alternateType) {
+          return consequentType
+        }
+        else { // no se puede calcular sin ejecutar la boolean
+          throw new SyntaxError(`Cannot determine type`);
+        }
+      }
 
       default: throw new SyntaxError(`Nodes ${exp.type} not supported yet!`);
     }

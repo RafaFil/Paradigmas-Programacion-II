@@ -58,8 +58,30 @@ const test5 = `
 
 `
 
+const test6 = `
+
+function f(x) {
+  if (true) {
+    const a = 5;
+  }
+  else {
+    const a = 7;
+  }
+}
+`
+
+const test7 = `
+
+function f(x) {
+  while(10 < 0) {
+  
+  }
+}
+`
+
+
 function main() {
-    const codeIn = test5;
+    const codeIn = test6;
     const {
       ast, code: codeOut,
     } = transformSync(codeIn, {

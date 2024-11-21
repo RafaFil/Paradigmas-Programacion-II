@@ -1,5 +1,5 @@
-const validOperands = ['+','-','*','/','%']
-const alwaysEvalNumber = ['-','*','/','%']
+const validOperands = ['+','-','*','/','%', '>>>', '>>', '<<']
+const alwaysEvalNumber = ['-','*','/','%','>>>', '>>', '<<']
 
 export function aExpCheck(leftType, rightType, operand) {
     if(!validOperands.includes(operand)) {

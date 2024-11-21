@@ -70,6 +70,38 @@ export function optimizerPlugin({ types: t }) {
                         path.replaceWith(t.booleanLiteral(!argument.value));
                     }
                 }
+            },
+            IfStatement : {
+                exit(path) {
+                    const { node } = path;
+                    const { test, consequent, alternate } = node;
+                    const output = generate(test).code
+                    const res = eval(output)
+                    console.log(node)
+                    console.log(res)
+                    if(res) {
+                        path.replaceWith(t.blockStatement(consequent.body))
+                    }
+                    else {
+                        if(alternate) {
+                            path.replaceWith(t.blockStatement(alternate.body))
+                        }
+                        else {
+                            path.replaceWith(t.blockStatement([]))
+                        }
+                    }
+                }
+            },
+            WhileStatement : {
+                exit (path) {
+                    const { node } = path;
+                    const { test } = node
+                    const output = generate(test).code
+                    const res = eval(output)
+                    if(!res) {
+                        path.replaceWith(t.blockStatement([]))
+                    }
+                }
             }
         }
     }
