@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  paraprogpsql-db:
+    image: postgres:latest
+    container_name: paraprogpsql-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    networks:
+      - paraprogpsql-net
+
+  paraprogpsql-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: paraprogpsql-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    networks:
+      - paraprogpsql-net
+    depends_on:
+      - paraprogpsql-db
+
+networks:
+  paraprogpsql-net:
+    driver: bridge
